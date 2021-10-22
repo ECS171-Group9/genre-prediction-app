@@ -1,10 +1,20 @@
-# GenrePredictionApp
+# Book Genre Prediction App
+
+This application utilizes a machine learning model developed by Group 9 in ECS 171 Fall 2021 to take a book description as input and return a predicted genre of book.
+
+https://book-genre-prediction.herokuapp.com/
+
+## Development Info
+
+Application utiliizes Angular for UI/Frontend element and Python for Backend and Flask for the webserver. Application is configured so that the Angular Frontend is served via Flask to keep the project running as a single service due to restrictions with how Heroku, the application host service, encapsulates and isolates their `Dynos` which are what they call their processes. Otherwise a flask server for the backend could talk to an express server for the frontend.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.11.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `gunicorn wsgi:app` with appropriate dependencies installed to run application locally, this is also how it is deployed on Heroku.
+
+Run `ng serve` for a dev server. (This will serve through Angular not Flask as we have it deployed on Heroku) Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
