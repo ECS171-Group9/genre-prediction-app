@@ -1,6 +1,0 @@
-{
-    "/api": {
-        "target": "https://book-genre-prediction.herokuapp.com:5000",
-        "secure": false
-    }
-}

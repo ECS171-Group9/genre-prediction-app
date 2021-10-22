@@ -1,13 +1,17 @@
-from flask import Flask, jsonify
-from flask_cors import CORS
+from flask import Flask, jsonify, send_from_directory
+
 
 app = Flask(__name__)
-CORS(app)
 
 
-@app.route("/", methods=['GET'])
-def hello():
-    return jsonify({'text': 'Hello World!'})
+@app.route('/<path:path>', methods=['GET'])
+def static_proxy(path):
+    return send_from_directory('../dist', path)
+
+
+@app.route('/')
+def root():
+    return send_from_directory('../dist', 'index.html')
 
 
 @app.route("/prediction/", methods=['GET'])
