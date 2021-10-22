@@ -22,7 +22,6 @@
         "express": "^4.17.1",
         "flask": "^0.2.10",
         "flask-cors": "^0.0.1",
-        "gunicorn": "~20.1.0",
         "path": "^0.12.7",
         "rxjs": "~6.6.0",
         "tslib": "^2.3.0",
@@ -44,8 +43,7 @@
         "karma-jasmine-html-reporter": "~1.7.0",
         "typescript": "~4.3.5",
         "flask": "^0.2.10",
-        "flask-cors": "^0.0.1",
-        "gunicorn": "~20.1.0"
+        "flask-cors": "^0.0.1"
     },
     "engines": {
         "node": "14.17.0",
