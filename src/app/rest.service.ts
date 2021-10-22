@@ -1,6 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Location } from "@angular/common";
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -8,17 +7,13 @@ import { Location } from "@angular/common";
 export class RestService {
 
     constructor(
-        private http : HttpClient,
-        private location: Location
+        private http : HttpClient
     ) { }
 
     ngOnInit() { }
-    apiUrl = 'https://book-genre-prediction.herokuapp.com:5000';
-
 
     getPrediction() {
-        console.log('JIM: ' + this.location.path());
-        const predictionUrl = this.apiUrl + '/prediction/';
+        const predictionUrl = '/prediction/';
         return this.http.get(predictionUrl);
     }
 }
