@@ -7,7 +7,7 @@
         "build": "ng build",
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
-        "heroku-postbuild": "ng build --configuration=production"
+        "heroku-postbuild": "ng build --configuration=production && python ./backend/__main__.py"
     },
     "private": true,
     "dependencies": {
