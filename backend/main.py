@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__, static_url_path='', static_folder='dist', template_folder='dist')
@@ -6,8 +6,8 @@ CORS(app)
 
 
 @app.route("/", methods=['GET'])
-def index():
-    return render_template("index.html")
+def hello():
+    return jsonify({'text': 'Hello World!'})
 
 
 @app.route("/prediction/", methods=['GET'])
