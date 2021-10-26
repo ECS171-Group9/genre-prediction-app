@@ -1,5 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from "rxjs";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class RestService {
 
     ngOnInit() { }
 
-    getPrediction(summary: string) {
+    getPrediction(summary: string): Observable<any> {
         const payload = {
             data: summary
         }

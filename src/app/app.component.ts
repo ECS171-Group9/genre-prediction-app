@@ -18,10 +18,10 @@ export class AppComponent implements OnInit {
 
     predictGenre(summary: string): void {
         console.log('Predicting Genre...');
-        this.rs.getPrediction(summary).subscribe((response) => {
-            console.log(response);
+        this.rs.getPrediction(summary).subscribe(response => {
+            console.log(response.data);
             this.predicted = true;
-            this.prediction =  response;
+            this.prediction =  response.data;
         },
         (error) => {
             console.log('Unable to retrieve data' + error);

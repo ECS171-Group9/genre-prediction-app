@@ -30,7 +30,8 @@ def prediction(summary: str) -> str:
     # Need to implement predictive model here
     app.logger.debug(summary)
 
-    genre = 'Fiction'
+    # testing summary value
+    genre = summary
     return genre
 
 
