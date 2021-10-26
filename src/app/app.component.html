@@ -1,11 +1,17 @@
 <div class="content" role="main">
 
-    <!-- Resources -->
+    <!-- Title and entry field -->
     <h1>{{ title }}</h1>
-    <p>Use the fields below:</p>
+    <p>Enter a book summary in the field below to predict genres:</p>
+    <div>
+        <input type="text" name="summaryField" id="summaryField" #summaryField>
+    </div>
+    <div>
+        <button type="button" class="btn btn-success" (click)="predictGenre(summaryField.value)">Predict</button>
+    </div>
 
-    <!-- WILL ADD COMPONENT SPACE HERE -->
-    <div>Prediction: {{ prediction }}</div>
+    <div *ngIf="predicted">Prediction: {{ prediction }}</div>
+
     <!-- Footer -->
     <footer>
         Love Book Genre Prediction?

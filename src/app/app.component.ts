@@ -6,15 +6,21 @@ import { RestService } from "./rest.service";
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-    title = 'Book Genre Prediction';
+    title = 'Book Genre Predictor';
+    predicted = false;
     prediction: any;
 
     constructor(private rs: RestService) { }
 
-    ngOnInit() {
-        this.rs.getPrediction().subscribe((response) => {
+    ngOnInit() { }
+
+    predictGenre(summary: string): void {
+        console.log('Predicting Genre...');
+        this.rs.getPrediction(summary).subscribe((response) => {
+            console.log(response);
+            this.predicted = true;
             this.prediction =  response;
         },
         (error) => {

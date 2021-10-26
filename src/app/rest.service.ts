@@ -12,8 +12,11 @@ export class RestService {
 
     ngOnInit() { }
 
-    getPrediction() {
-        const predictionUrl = '/prediction/';
-        return this.http.get(predictionUrl);
+    getPrediction(summary: string) {
+        const payload = {
+            data: summary
+        }
+        const predictionUrl = '/prediction' ;
+        return this.http.post(predictionUrl, payload);
     }
 }

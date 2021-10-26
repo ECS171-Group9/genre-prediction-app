@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 
 
 app = Flask(__name__)
@@ -14,14 +14,22 @@ def root():
     return send_from_directory('../dist', 'index.html')
 
 
-@app.route("/prediction/", methods=['GET'])
+@app.route('/prediction', methods=['POST'])
 def get_prediction():
-    genre = prediction()
-    return jsonify({'data': genre})
+    request_data = request.get_json()
+    summary = request_data.get('data')
+    try:
+        genre = prediction(summary)
+        return jsonify({'data': genre})
+
+    except Exception as e:
+        app.logger.error(f'Exception occurred retrieving summary. {e}')
 
 
-def prediction() -> str:
+def prediction(summary: str) -> str:
     # Need to implement predictive model here
+    app.logger.debug(summary)
+
     genre = 'Fiction'
     return genre
 
