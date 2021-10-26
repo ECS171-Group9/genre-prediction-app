@@ -27,9 +27,8 @@ def get_prediction():
 
 
 def prediction(summary: str) -> str:
-    # Need to implement predictive model here
-    app.logger.debug(summary)
-
+    # TODO: Will need to add model implementation here
+    # TODO: Need to add a function to clean the summary to shape it like the data the model is trained on
     # testing summary value
     genre = summary
     return genre
