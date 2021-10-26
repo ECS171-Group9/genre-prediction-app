@@ -12,9 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `gunicorn wsgi:app` with appropriate dependencies installed to run application locally, this is also how it is deployed on Heroku.
-
-Run `ng serve` for a dev server. (This will serve through Angular not Flask as we have it deployed on Heroku) Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `gunicorn wsgi:app` with appropriate dependencies installed to run application locally, this is also how it is deployed on Heroku. Make sure to use `ng build --configuration=production` prior to launching the webserver (gunicorn) for the first time. You also want to re-build after you make any changes locally for them to show up when you restart the webserver.
 
 ## Code scaffolding
 
