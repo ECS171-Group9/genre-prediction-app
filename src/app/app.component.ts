@@ -17,9 +17,9 @@ export class AppComponent implements OnInit {
     ngOnInit() { }
 
     predictGenre(summary: string): void {
+
         console.log('Predicting Genre...');
         this.rs.getPrediction(summary).subscribe(response => {
-            console.log(response.data);
             this.predicted = true;
             this.prediction =  response.data;
         },
