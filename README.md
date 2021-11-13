@@ -15,7 +15,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 Instructions for Linux:
 In the terminal go to the project directory, I recommend setting up a virtual environment to keep the package dependencies controlled, you will need to have `nodejs` and `npm` installed in order to handle the packages. At that point, you should be able to run `npm install` to download package dependecies that are outlined in `packages.json`.
 
-Once packages are installed, run `ng build --configuration=production` in order to build the application. After that, run `gunicorn wsgi:app` to host the application locally. Depending on how you port bind `gunicorn` it should be available at `localhost:8000` in your web-browser. 
+Once packages are installed, run `ng build --configuration=production` in order to build the application. After that, run `gunicorn wsgi:app` to host the application locally. Depending on how you port bind `gunicorn` it should be available at `localhost:8000` in your web-browser.
+
+The trained NN model had to be stored in AWS S3 bucket due to its sheer size. As a result we have to use `awscli` when running locally and have console aws credentials set via `aws configure` in order for the code to be able to download the model when it starts up. There is an AWS IAM User, genre-prediction-app, that has a key setup whose credentials are being used. These credentials also have to be set on Heroku as well so it can access the S3 bucket files when the app is deployed. Docs here [https://devcenter.heroku.com/articles/s3](https://devcenter.heroku.com/articles/s3)
 
 You also want to re-build and restart the webserver, in that order, if you want to see any changes you've made to the application appear in the web-browser.
 

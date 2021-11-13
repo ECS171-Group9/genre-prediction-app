@@ -18,20 +18,16 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 
-def download_model(aws_filename=model_filename, access_key=aws_access_key,
-                   secret_key=aws_secret_key, bucket_name=aws_bucket) -> any:
+def download_model(aws_filename=model_filename, bucket_name=aws_bucket) -> any:
     """
     Retrieve Neural Network model from AWS S3 storage. Store in a tempfile for download that will be destroyed
     once it is loaded into memory
     :param aws_filename: file name of the model
-    :param access_key: AWS credential key
-    :param secret_key: AWS credential secret key
     :param bucket_name: name of bucket that the model is stored in on AWS S3
     :return: returns Keras neural network model ready for prediction
     """
     with tempfile.NamedTemporaryFile() as temp:
-        s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key,
-                          region_name='us-west-1')
+        s3 = boto3.client('s3', region_name='us-west-1')
         s3.download_file(bucket_name, aws_filename, temp.name)
         logging.debug("Download Successful!")
         return load_model(temp.name)
