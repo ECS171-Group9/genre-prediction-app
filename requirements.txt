@@ -20,7 +20,7 @@ click~=8.0.1
 blinker~=1.4
 itsdangerous~=2.0.1
 keras~=2.6.0
-tensorflow~=2.6.0
+tensorflow-cpu==2.6.0
 scipy~=1.7.1
 wrapt~=1.12.1
 requests~=2.26.0
