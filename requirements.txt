@@ -6,7 +6,7 @@ cryptography~=3.4.8
 typing_extensions~=3.10.0.2
 rsa~=4.7.2
 pyasn1~=0.4.8
-six~=1.16.0
+six>=1.15.0,<=1.16.0
 gast~=0.4.0
 numpy~=1.21.2
 h5py~=3.2.1
