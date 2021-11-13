@@ -1,7 +1,6 @@
 jmespath~=0.10.0
 pip~=21.2.4
 zipp~=3.6.0
-zlib>=1.2.11
 wheel~=0.35.1
 cryptography~=3.4.8
 typing_extensions>=3.7.4,<=3.10.0.2
