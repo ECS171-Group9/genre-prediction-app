@@ -14,6 +14,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `gunicorn wsgi:app` with appropriate dependencies installed to run application locally, this is also how it is deployed on Heroku. Make sure to use `ng build --configuration=production` prior to launching the webserver (gunicorn) for the first time. You also want to re-build after you make any changes locally for them to show up when you restart the webserver.
 
+For application debug `gunicorn wsgi:app --capture-output --log-level debug --timeout 90` to run the app will output `gunicorn` logs as well as the debug logs in the app itself.
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
