@@ -3,7 +3,7 @@ pip~=21.2.4
 zipp~=3.6.0
 wheel~=0.35.1
 cryptography~=3.4.8
-typing_extensions~=3.10.0.2
+typing_extensions>=3.7.4,<=3.10.0.2
 rsa~=4.7.2
 pyasn1~=0.4.8
 six>=1.15.0,<=1.16.0
