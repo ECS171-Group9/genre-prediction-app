@@ -56,7 +56,7 @@ def root():
 def get_prediction():
     request_data = request.get_json()
     summary = request_data.get('data')
-    logging.debug(f'summary: {summary}')
+
     try:
         genre = prediction(summary)
         return jsonify({'data': genre})
@@ -74,11 +74,11 @@ def prediction(summary: str) -> list:
 
     tokenized_summary = summary_preprocessing(summary)
 
-    logging.debug(f'tokenized_summary: {tokenized_summary}')
-    logging.debug(f'Type: {type(tokenized_summary)}, Shape: {np.asarray(tokenized_summary).shape} ')
+    # logging.debug(f'tokenized_summary: {tokenized_summary}')
+    # logging.debug(f'Type: {type(tokenized_summary)}, Shape: {np.asarray(tokenized_summary).shape} ')
 
     prediction_summary = np.reshape(tokenized_summary, (1, summary_length))
-    logging.debug(f'prediction_summary: {prediction_summary}')
+    # logging.debug(f'prediction_summary: {prediction_summary}')
 
     output = model.predict(prediction_summary).tolist()
     logging.debug(f'output: {output}')
