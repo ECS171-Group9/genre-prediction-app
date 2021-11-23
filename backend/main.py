@@ -7,8 +7,8 @@ import logging
 from .configs import *
 import tempfile
 
-import boto3
 import numpy as np
+from google.cloud import storage
 from flask import Flask, jsonify, send_from_directory, request
 from tensorflow.keras.models import load_model
 
@@ -18,17 +18,18 @@ app = Flask(__name__)
 logging.basicConfig(level=logging.DEBUG)
 
 
-def download_model(aws_filename=model_filename, bucket_name=aws_bucket) -> any:
+def download_model(bucket_name=gc_bucket_name, source_blob_name=gc_source_blob_name) -> any:
     """
-    Retrieve Neural Network model from AWS S3 storage. Store in a tempfile for download that will be destroyed
-    once it is loaded into memory
-    :param aws_filename: file name of the model
-    :param bucket_name: name of bucket that the model is stored in on AWS S3
-    :return: returns Keras neural network model ready for prediction
+    Retrieve NN model from Google Cloud Storage
+    :param bucket_name:
+    :param source_blob_name:
+    :return:
     """
+    storage_client = storage.Client()
+    bucket = storage_client.bucket(bucket_name)
     with tempfile.NamedTemporaryFile() as temp:
-        s3 = boto3.client('s3', region_name='us-west-1')
-        s3.download_file(bucket_name, aws_filename, temp.name)
+        blob = bucket.blob(source_blob_name)
+        blob.download_to_filename(temp.name)
         logging.debug("Download Successful!")
         return load_model(temp.name)
 
@@ -55,7 +56,7 @@ def root():
 def get_prediction():
     request_data = request.get_json()
     summary = request_data.get('data')
-    logging.debug(f'summary: {summary}')
+
     try:
         genre = prediction(summary)
         return jsonify({'data': genre})
@@ -73,11 +74,11 @@ def prediction(summary: str) -> list:
 
     tokenized_summary = summary_preprocessing(summary)
 
-    logging.debug(f'tokenized_summary: {tokenized_summary}')
-    logging.debug(f'Type: {type(tokenized_summary)}, Shape: {np.asarray(tokenized_summary).shape} ')
+    # logging.debug(f'tokenized_summary: {tokenized_summary}')
+    # logging.debug(f'Type: {type(tokenized_summary)}, Shape: {np.asarray(tokenized_summary).shape} ')
 
     prediction_summary = np.reshape(tokenized_summary, (1, summary_length))
-    logging.debug(f'prediction_summary: {prediction_summary}')
+    # logging.debug(f'prediction_summary: {prediction_summary}')
 
     output = model.predict(prediction_summary).tolist()
     logging.debug(f'output: {output}')

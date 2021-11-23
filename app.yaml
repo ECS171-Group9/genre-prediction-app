@@ -1,0 +1,16 @@
+runtime: python39
+
+instance_class: F4_1G
+
+entrypoint: gunicorn -b :$PORT wsgi:app --timeout 180
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
+inbound_services:
+- warmup
+
+health_check:
+  enable_health_check: false

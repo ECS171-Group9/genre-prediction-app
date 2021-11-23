@@ -1,7 +1,6 @@
 # Configs for the application
 summary_size = 250
 
-# URLs for S3 assets
-model_url = "https://genre-prediction-assets.s3.us-west-1.amazonaws.com/book_model.h5"
-model_filename = 'book_model.h5'
-aws_bucket = "genre-prediction-assets"
+# Google Cloud Configs
+gc_bucket_name = 'book-genre-predictor.appspot.com'
+gc_source_blob_name = 'book_model.h5'
