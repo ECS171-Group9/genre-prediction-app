@@ -1,5 +1,6 @@
 # Configs for the application
-summary_size = 250
+SUMMARY_SIZE = 200
+MLB_THRESHOLD = 0.5
 
 # Google Cloud Configs
 gc_bucket_name = 'book-genre-predictor.appspot.com'

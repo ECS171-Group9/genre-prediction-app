@@ -10,7 +10,9 @@ export class AppComponent implements OnInit {
 
     title = 'Book Genre Predictor';
     predicted = false;
-    prediction: any;
+    predictions: any;
+    probabilities: any;
+    threshold: any;
 
     constructor(private rs: RestService) { }
 
@@ -20,8 +22,10 @@ export class AppComponent implements OnInit {
 
         console.log('Predicting Genre...');
         this.rs.getPrediction(summary).subscribe(response => {
+            this.predictions =  response.prediction;
+            this.probabilities = response.probabilities;
+            this.threshold = response.threshold;
             this.predicted = true;
-            this.prediction =  response.data;
         },
         (error) => {
             console.log('Unable to retrieve data' + error);

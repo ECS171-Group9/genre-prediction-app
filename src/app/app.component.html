@@ -12,14 +12,20 @@
             </button>
         </div>
     </div>
-    <br />
-    <div *ngIf="predicted">Prediction: {{ prediction }}</div>
+    <br/>
+    <div *ngIf="predicted">Prediction:
+        <div *ngFor="let prediction of predictions"> {{ prediction }} </div>
+    </div>
+    <br/>
+    <div *ngIf="predicted">Probabilities:
+        <div *ngFor="let probability of probabilities"> {{ probability }}</div>
+    </div>
 </div>
 
 <!-- Footer -->
 <footer class="footer fixed-bottom mt-auto py-3 bg-light">
     <div class="row d-flex mx-auto justify-content-center flex-nowrap">
-        <span>Love Book Genre Prediction? Give our repo a star</span>
+        <span>Love Book Genre Predictor? Give our repo a star</span>
         <a href="https://github.com/ECS171-Group9/genre-prediction-app" target="_blank" rel="noopener">
             <div class="github-star-badge">
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
