@@ -1,27 +1,26 @@
 <div class="content" role="main">
-    <!-- Title and entry field -->
-    <h1>{{ title }}</h1>
-    <p>Enter a book summary in the field below and click Predict:</p>
-    <br />
     <div class="align-middle">
-        <div class="input-group">
-            <input type="search" name="summaryField" id="summaryField" class="form-control rounded"
-                placeholder="Summary" aria-label="Summary" aria-describedby="search-addon" #summaryField />
-            <button type="button" class="btn btn-outline-primary" (click)="predictGenre(summaryField.value)">
+        <h1>{{ title }}</h1>
+        <p>Enter a book summary in the field below and click Predict:</p>
+        <br/>
+        <textarea  class="form-control" name="summaryField" id="summaryField" placeholder="Insert Summary Here..."
+                   cols="40" rows="5" #summaryField></textarea>
+        <br/>
+        <button type="button" class="btn btn-outline-primary btn-block" (click)="predictGenre(summaryField.value)">
                 Predict
-            </button>
+        </button>
+        <br/>
+        <div *ngIf="predicted">
+            <h3>Prediction:</h3>
+            <div *ngFor="let prediction of predictions"> {{ prediction[0] }} with {{ prediction[1] }} confidence </div>
         </div>
-    </div>
-    <br/>
-    <div *ngIf="predicted">Prediction:
-        <div *ngFor="let prediction of predictions"> {{ prediction }} </div>
-    </div>
-    <br/>
-    <div *ngIf="predicted">Probabilities:
-        <div *ngFor="let probability of probabilities"> {{ probability }}</div>
-    </div>
-    <div>
-        <app-bar-chart></app-bar-chart>
+        <br/>
+        <div *ngIf="predicted">
+            <app-bar-chart
+                [barChartLabels]="graphLabels"
+                [barChartData]="graphData">
+            </app-bar-chart>
+        </div>
     </div>
 </div>
 

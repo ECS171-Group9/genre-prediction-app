@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ChartDataSets, ChartType, ChartOptions } from 'chart.js';
 import { Label } from 'ng2-charts';
 
@@ -8,19 +8,28 @@ import { Label } from 'ng2-charts';
     styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent {
+    @Input() barChartLabels: Label[] = [];
+    @Input() barChartData: ChartDataSets[] = [];
 
-    barChartOptions: ChartOptions = {
-        responsive: true,
-        scales: { xAxes: [{}], yAxes: [{}] },
-    };
-    barChartLabels: Label[] = ['2013', '2014', '2015', '2016', '2017', '2018'];
     barChartType: ChartType = 'bar';
     barChartLegend = true;
     barChartPlugins = [];
 
-    barChartData: ChartDataSets[] = [
-        { data: [2500, 5900, 6000, 8100, 8600, 8050, 1200], label: 'Company A' },
-        { data: [2800, 4800, 4000, 7900, 9600, 8870, 1400], label: 'Company B' }
-    ];
+    barChartOptions: ChartOptions = {
+        responsive: true,
+        scales: {
+            xAxes: [{
+                display: true,
+            }],
+            yAxes: [{
+                display: true,
+                ticks: {
+                    min: 0,
+                    max: 1.0,
+                    stepSize: 0.2
+                }
+            }]
+        },
+    };
 
 }
