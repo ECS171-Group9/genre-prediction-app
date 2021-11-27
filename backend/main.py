@@ -36,7 +36,7 @@ def download_model(bucket_name=gc_bucket_name, source_blob_name=gc_source_blob_n
 
 
 # load needed assets into memory
-model = load_model(r'/c/Users/Jim/workspace/school/ECS_171/models/book_model_one_lstm.h5', compile=False)
+model = download_model()
 mlb = pickle.load(open('backend/mlb.pkl', 'rb'))
 token_dict = json.load(open('backend/token_dict.json'))
 # take the inverse of the token_dict for vocab mapping
