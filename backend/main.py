@@ -32,7 +32,7 @@ def download_model(bucket_name=gc_bucket_name, source_blob_name=gc_source_blob_n
         blob = bucket.blob(source_blob_name)
         blob.download_to_filename(temp.name)
         logging.debug("Download Successful!")
-        return load_model(temp.name)
+        return load_model(temp.name, compile=False)
 
 
 # load needed assets into memory
