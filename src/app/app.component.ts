@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
             // Clear any existing graph info to avoid multiple prediction displays
             this.graphLabels = [];
             this.graphData = [];
+            this.formattedPredictions = [];
             // get response data
             this.predictions =  response.prediction;
             this.probabilities = response.probabilities;
