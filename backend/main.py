@@ -6,6 +6,7 @@ import pickle
 import logging
 from .configs import *
 import tempfile
+import json
 
 import numpy as np
 from google.cloud import storage
@@ -35,11 +36,13 @@ def download_model(bucket_name=gc_bucket_name, source_blob_name=gc_source_blob_n
 
 
 # load needed assets into memory
-model = download_model()
-vocabulary = pickle.load(open('backend/vocab_dict.pkl', 'rb'))
+model = load_model(r'/c/Users/Jim/workspace/school/ECS_171/models/book_model_one_lstm.h5', compile=False)
 mlb = pickle.load(open('backend/mlb.pkl', 'rb'))
+token_dict = json.load(open('backend/token_dict.json'))
+# take the inverse of the token_dict for vocab mapping
+vocabulary = {v: int(k) for (k, v) in token_dict.items()}
 
-summary_length = summary_size
+summary_length = SUMMARY_SIZE
 
 
 @app.route('/<path:path>', methods=['GET'])
@@ -58,14 +61,14 @@ def get_prediction():
     summary = request_data.get('data')
 
     try:
-        genre = prediction(summary)
-        return jsonify({'data': genre})
+        prediction_data = get_prediction_dict(summary)
+        return jsonify(prediction_data)
 
     except Exception as e:
         app.logger.error(f'Exception occurred retrieving summary. {e}')
 
 
-def prediction(summary: str) -> list:
+def get_prediction_dict(summary: str) -> dict:
     """
     Run cleaning processes and return a list of the predicted genres for the summary
     :param summary: text description of a book
@@ -73,28 +76,46 @@ def prediction(summary: str) -> list:
     """
 
     tokenized_summary = summary_preprocessing(summary)
-
-    # logging.debug(f'tokenized_summary: {tokenized_summary}')
-    # logging.debug(f'Type: {type(tokenized_summary)}, Shape: {np.asarray(tokenized_summary).shape} ')
-
     prediction_summary = np.reshape(tokenized_summary, (1, summary_length))
-    # logging.debug(f'prediction_summary: {prediction_summary}')
 
     output = model.predict(prediction_summary).tolist()
     logging.debug(f'output: {output}')
 
-    score = [[(value > 0.2)*1 for value in element] for element in output]
-    logging.debug(f'score: {score}')
+    prediction_dict = label_correlation(output)
+    logging.debug(f'predicted genres: {prediction_dict.get("prediction")}')
 
-    genre = mlb.inverse_transform(np.asarray(score))
-    logging.debug(f'genre: {genre}')
-    return genre
+    return prediction_dict
+
+
+def label_correlation(output) -> dict:
+    """
+    Retrieves label prediction based on a MultiLabelBinarizer
+    :param output: 2-Dimensional list containing RNN prediction output
+    :return: dict dict with all probabilities for each Genre label, the predicted Genres, and the threshold used to
+    determine the prediction
+    """
+    all_confidence = list(zip(mlb.classes_, output[0]))
+    probabilities = []
+
+    for (label, confidence) in sorted(all_confidence, key=lambda x: x[1], reverse=True):
+        probabilities.append((label, confidence))
+
+    score = [[(value > MLB_THRESHOLD) * 1 for value in element] for element in output]
+    confidence = [o for o in output[0] if o > MLB_THRESHOLD]
+    labels = list(mlb.inverse_transform(np.asarray(score))[0])
+
+    data = {
+      'probabilities': probabilities,
+      'prediction': sorted(list(zip(labels, confidence)), key=lambda x: x[1], reverse=True),
+      'threshold': MLB_THRESHOLD
+    }
+
+    return data
 
 
 def summary_preprocessing(summary: str) -> list:
     """
-    Function takes a submitted summary and performs the preprocessing necessary for our prediction model
-
+    Takes a submitted summary and performs the preprocessing necessary for our prediction model
     :param summary: str of words summarizing a book
     :return:
     """
@@ -109,7 +130,6 @@ def summary_preprocessing(summary: str) -> list:
 def tokenizer(summary, vocab_dict, summary_length) -> list:
     """
     Function that tokenizes a book summary to use on a genre prediction model
-
     :param summary: Summary to convert to tokens
     :param vocab_dict: Vocabulary used to train the model, dictionary mapping words to tokens
     :param summary_length: Length of the summary

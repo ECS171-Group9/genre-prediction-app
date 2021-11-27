@@ -1,25 +1,35 @@
 <div class="content" role="main">
-    <!-- Title and entry field -->
-    <h1>{{ title }}</h1>
-    <p>Enter a book summary in the field below and click Predict:</p>
-    <br />
     <div class="align-middle">
-        <div class="input-group">
-            <input type="search" name="summaryField" id="summaryField" class="form-control rounded"
-                placeholder="Summary" aria-label="Summary" aria-describedby="search-addon" #summaryField />
-            <button type="button" class="btn btn-outline-primary" (click)="predictGenre(summaryField.value)">
+        <h1>{{ title }}</h1>
+        <p>Enter a book summary in the field below and click Predict:</p>
+        <br/>
+        <textarea  class="form-control" name="summaryField" id="summaryField" placeholder="Insert Summary Here..."
+                   cols="40" rows="5" #summaryField></textarea>
+        <br/>
+        <button type="button" class="btn btn-outline-primary btn-block" (click)="predictGenre(summaryField.value)">
                 Predict
-            </button>
+        </button>
+        <br/>
+        <div *ngIf="predicted">
+            <h4>Prediction:</h4>
+            <div *ngFor="let prediction of formattedPredictions">
+                {{ prediction[0] }} with {{ prediction[1] }}% confidence
+            </div>
+        </div>
+        <br/>
+        <div *ngIf="predicted">
+            <app-bar-chart
+                [barChartLabels]="graphLabels"
+                [barChartData]="graphData">
+            </app-bar-chart>
         </div>
     </div>
-    <br />
-    <div *ngIf="predicted">Prediction: {{ prediction }}</div>
 </div>
 
 <!-- Footer -->
 <footer class="footer fixed-bottom mt-auto py-3 bg-light">
     <div class="row d-flex mx-auto justify-content-center flex-nowrap">
-        <span>Love Book Genre Prediction? Give our repo a star</span>
+        <span>Love Book Genre Predictor? Give our repo a star</span>
         <a href="https://github.com/ECS171-Group9/genre-prediction-app" target="_blank" rel="noopener">
             <div class="github-star-badge">
                 <svg class="material-icons" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
