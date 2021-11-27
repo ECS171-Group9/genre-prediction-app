@@ -11,8 +11,10 @@
         </button>
         <br/>
         <div *ngIf="predicted">
-            <h3>Prediction:</h3>
-            <div *ngFor="let prediction of predictions"> {{ prediction[0] }} with {{ prediction[1] }} confidence </div>
+            <h4>Prediction:</h4>
+            <div *ngFor="let prediction of formattedPredictions">
+                {{ prediction[0] }} with {{ prediction[1] }}% confidence
+            </div>
         </div>
         <br/>
         <div *ngIf="predicted">

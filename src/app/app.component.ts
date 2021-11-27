@@ -11,6 +11,7 @@ import { Label } from "ng2-charts";
 export class AppComponent implements OnInit {
 
     title = 'Book Genre Predictor';
+    formattedPredictions = <any>[];
     predicted = false;
     predictions = [];
     probabilities = [];
@@ -33,6 +34,11 @@ export class AppComponent implements OnInit {
             this.predictions =  response.prediction;
             this.probabilities = response.probabilities;
             this.threshold = response.threshold;
+            // Adjust predictions into a percent
+            for (let i = 0; i < this.predictions.length; i++) {
+                this.formattedPredictions[i] = [this.predictions[i][0],
+                    (this.predictions[i][1] * 100).toFixed(2)];
+            }
             // Set Graph Data and Labels
             let probData: number[] = [];
             this.probabilities.forEach((probabilitySet) => {
