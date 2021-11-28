@@ -1,5 +1,6 @@
 """
 Created for Group 9's group project in ECS 171 Fall 2021
+Author: Jim McKerney
 """
 import re
 import pickle
