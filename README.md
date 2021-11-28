@@ -4,6 +4,9 @@ This application utilizes a machine learning model developed by Group 9 in ECS 1
 
 https://book-genre-predictor.wl.r.appspot.com/
 
+![image](https://user-images.githubusercontent.com/26423468/143788895-c42d74c9-d247-42ba-8e83-76b219408182.png)
+
+
 ## Development Info
 
 Application utiliizes Angular for UI/Frontend element and Python for Backend and Flask for the webserver. Application is configured so that the Angular Frontend is served via Flask to keep the project running as a single service due to restrictions with how Heroku, the application host service, encapsulates and isolates their `Dynos` which are what they call their processes. Otherwise a flask server for the backend could talk to an express server for the frontend. This approach was taken before we ran up against memory limits on Heroku which forced us to look elsewhere for deployment eventually landing on Google App Engine. Effort could be made to split the front and back end into separate microservices since it is easily supported on the Project level on GAE.  
