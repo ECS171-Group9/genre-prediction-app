@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
                 probData.push(probabilitySet[1]);
             });
             // Check if prediction was made and set message if not
-            if (!!this.predictions.length) {
+            if (this.predictions.length == 0) {
                 this.noPredictionMessage = 'Could not make a prediction with confidence threshold at ' + this.threshold;
             }
             // CharDataSets element in the form:

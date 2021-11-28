@@ -8,14 +8,18 @@ h1,
 h2,
 h3 {
     margin: 8px 0;
+    text-align: center;
 }
 
 p {
     margin: 0;
+    text-align: center;
 }
 
 body {
     font-family: Consolas, sans-serif;
+    display:flex;
+    flex-direction:column;
 }
 
 .spacer {
@@ -43,7 +47,8 @@ a:hover {
 }
 
 footer {
-    margin-top: 8px;
+    flex: 0 0 100px;
+    margin-top: auto;
     display: flex;
     align-items: center;
     line-height: 20px;
