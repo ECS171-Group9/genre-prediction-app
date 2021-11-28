@@ -1,7 +1,7 @@
 <div class="content" role="main">
     <div class="align-middle">
         <h1>{{ title }}</h1>
-        <p>Enter a book summary in the field below and click Predict:</p>
+        <p>Enter a book summary in the field below and click Predict</p>
         <br/>
         <textarea  class="form-control" name="summaryField" id="summaryField" placeholder="Insert Summary Here..."
                    cols="40" rows="5" #summaryField></textarea>
@@ -14,6 +14,9 @@
             <h4>Prediction:</h4>
             <div *ngFor="let prediction of formattedPredictions">
                 {{ prediction[0] }} with {{ prediction[1] }}% confidence
+            </div>
+            <div *ngIf="!!predictions.length">
+                {{ noPredictionMessage }}
             </div>
         </div>
         <br/>

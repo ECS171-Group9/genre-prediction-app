@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
     threshold = 0;
     graphLabels: Label[] = [];
     graphData: ChartDataSets[] = [];
+    noPredictionMessage = '';
 
     constructor(private rs: RestService) { }
 
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
             this.graphLabels = [];
             this.graphData = [];
             this.formattedPredictions = [];
+            this.noPredictionMessage = '';
             // get response data
             this.predictions =  response.prediction;
             this.probabilities = response.probabilities;
@@ -46,6 +48,10 @@ export class AppComponent implements OnInit {
                 this.graphLabels.push(probabilitySet[0]);
                 probData.push(probabilitySet[1]);
             });
+            // Check if prediction was made and set message if not
+            if (!!this.predictions.length) {
+                this.noPredictionMessage = 'Could not make a prediction with confidence threshold at ' + this.threshold;
+            }
             // CharDataSets element in the form:
             // { data: [2500, 5900, 6000, 8100, 8600, 8050, 1200], label: 'Company A' }
             const dataSet = {
